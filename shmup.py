@@ -52,7 +52,7 @@ def draw_shield_bar(surf, x, y, percentage):
         percentage = 0
     bar_length = 100
     bar_height = 10
-    filled = percentage / 100 *bar_length
+    filled = percentage / 100 * bar_length
     outline_rect = pygame.Rect(x, y, bar_length, bar_height)
     filled_rect = pygame.Rect(x, y, filled, bar_height)
     pygame.draw.rect(surf, GREEN, filled_rect)
@@ -151,11 +151,11 @@ class Bullet(pygame.sprite.Sprite):
 
 
 class Explosion(pygame.sprite.Sprite):
-    def __init__(self, center, size):
+    def __init__(self, anim, center, size):
         pygame.sprite.Sprite.__init__(self)
         self.size = int(size)
         self.anim = []
-        for expl_img in expln_anim:
+        for expl_img in anim:
             expl_img_resized = pygame.transform.scale(expl_img, (self.size, self.size))
             self.anim.append(expl_img_resized)
         self.image = self.anim[0]
@@ -164,11 +164,11 @@ class Explosion(pygame.sprite.Sprite):
         self.rect.center = center
         self.frame = 0
         self.last_update = pygame.time.get_ticks()
-        self.frame_rate = 50
+        self.frame_delay = 40
 
     def update(self):
         now = pygame.time.get_ticks()
-        if now - self.last_update > self.frame_rate:
+        if now - self.last_update > self.frame_delay:
             self.frame += 1
             if self.frame == len(self.anim):
                 self.kill()
@@ -188,20 +188,27 @@ bullet_img = pygame.image.load(os.path.join(img_dir, 'laserRed06.png')).convert(
 meteor_imgs = []
 meteor_list = ['meteorBrown_med1.png', 'meteorBrown_med1.png', 'meteorBrown_med3.png',
                'meteorBrown_med3.png', 'meteorBrown_tiny1.png',
-               'meteorBrown_tiny2.png', 'meteorBrown_big3.png', 'meteorBrown_big2.png']
+               'meteorBrown_tiny2.png', 'meteorBrown_big3.png', 'meteorBrown_big4.png']
 for img in meteor_list:
     meteor_imgs.append(pygame.image.load(os.path.join(img_dir, img)).convert())
 expln_anim = []
+player_expln_anim = []
 for i in range(9):
     filename = 'regularExplosion0{}.png'.format(i)
     img = pygame.image.load(os.path.join(img_dir, filename)).convert()
     expln_anim.append(img)
+    filename = 'sonicExplosion0{}.png'.format(i)
+    img = pygame.image.load(os.path.join(img_dir, filename)).convert()
+    player_expln_anim.append(img)
 
 # Load all game sounds
 shoot_snd = pygame.mixer.Sound(os.path.join(snd_dir, 'Laser Shot.wav'))
 expl_snds = []
 for expl in ['expl3.wav', 'expl6.wav']:
     expl_snds.append(pygame.mixer.Sound(os.path.join(snd_dir, expl)))
+for sound in expl_snds:
+    sound.set_volume(0.6)
+player_expln_snd = pygame.mixer.Sound(os.path.join(snd_dir, 'rumble1.ogg'))
 pygame.mixer.music.load(os.path.join(snd_dir, 'tgfcoder-FrozenJam-SeamlessLoop.ogg'))
 pygame.mixer.music.set_volume(0.4)
 
@@ -241,7 +248,7 @@ while running:
     for hit in hits:
         score += int((70 - hit.radius) / 2)
         random.choice(expl_snds).play()
-        explosion = Explosion(hit.rect.center, hit.rect.width * 0.9)
+        explosion = Explosion(expln_anim, hit.rect.center, hit.rect.width * 0.9)
         all_sprites.add(explosion)
         spawn_new_mob()
 
@@ -249,12 +256,21 @@ while running:
     hits = pygame.sprite.spritecollide(player, mobs, True, pygame.sprite.collide_circle)
     for hit in hits:
         player.shield -= hit.radius * 2
+
         if player.shield <= 0:
-            running = False
+            player_expln_snd.play()
+            death_explosion = Explosion(player_expln_anim, player.rect.center,
+                                        max(hit.rect.width * 0.5, player.rect.width * 1.4))
+            all_sprites.add(death_explosion)
+            player.kill()
+
         else:
-            explosion = Explosion(hit.rect.center, hit.rect.width * 0.5)
+            random.choice(expl_snds).play()
+            explosion = Explosion(expln_anim, hit.rect.center, hit.rect.width * 0.5)
             all_sprites.add(explosion)
             spawn_new_mob()
+    if not player.alive() and not death_explosion.alive():
+        running = False
 
     # Draw / render
     screen.fill(BLACK)
