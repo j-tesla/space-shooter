@@ -37,7 +37,7 @@ def draw_text(surf, text, size, x, y, color=WHITE):
     font = pygame.font.Font(font_name, size)
     text_suface = font.render(text, True, color)
     text_rect = text_suface.get_rect()
-    text_rect.midtop = (x, y)
+    text_rect.midtop = (int(x), int(y))
     surf.blit(text_suface, text_rect)
 
 
@@ -52,7 +52,7 @@ def draw_shield_bar(surf, x, y, percentage):
         percentage = 0
     bar_length = 100
     bar_height = 10
-    filled = percentage / 100 * bar_length
+    filled = int(percentage / 100 * bar_length)
     outline_rect = pygame.Rect(x, y, bar_length, bar_height)
     filled_rect = pygame.Rect(x, y, filled, bar_height)
     pygame.draw.rect(surf, GREEN, filled_rect)
@@ -68,7 +68,7 @@ class Player(pygame.sprite.Sprite):
         self.radius = 20
         self.shield = 100
         # pygame.draw.circle(self.image, YELLOW, self.rect.center, self.radius)
-        self.rect.centerx = WIDTH / 2
+        self.rect.centerx = int(WIDTH / 2)
         self.rect.bottom = HEIGHT - 10
         self.speedx = 0
 
@@ -260,7 +260,7 @@ while running:
         if player.shield <= 0:
             player_expln_snd.play()
             death_explosion = Explosion(player_expln_anim, player.rect.center,
-                                        max(hit.rect.width * 0.5, player.rect.width * 1.4))
+                                        max(hit.rect.width * 0.5, player.rect.width * 2))
             all_sprites.add(death_explosion)
             player.kill()
 
