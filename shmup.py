@@ -1,4 +1,8 @@
 # Shoot'em up
+
+# Art: Kenny <https://opengameart.org/users/kenney>
+# Music: Frozen Jam by tgfcoder <https://twitter.com/tgfcoder> licensed under CC-BY-3
+
 import pygame
 import random
 import os
@@ -26,7 +30,6 @@ pygame.mixer.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Shoot\'em up!!')
 clock = pygame.time.Clock()
-score = 0
 font_name = pygame.font.match_font('arial')
 
 
@@ -38,6 +41,24 @@ def draw_text(surf, text, size, x, y, color=WHITE):
     surf.blit(text_suface, text_rect)
 
 
+def spawn_new_mob():
+    m = Mob()
+    all_sprites.add(m)
+    mobs.add(m)
+
+
+def draw_shield_bar(surf, x, y, percentage):
+    if percentage <= 0:
+        percentage = 0
+    bar_length = 100
+    bar_height = 10
+    filled = percentage / 100 *bar_length
+    outline_rect = pygame.Rect(x, y, bar_length, bar_height)
+    filled_rect = pygame.Rect(x, y, filled, bar_height)
+    pygame.draw.rect(surf, GREEN, filled_rect)
+    pygame.draw.rect(surf, WHITE, outline_rect, 2)
+
+
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -45,6 +66,7 @@ class Player(pygame.sprite.Sprite):
         self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.radius = 20
+        self.shield = 100
         # pygame.draw.circle(self.image, YELLOW, self.rect.center, self.radius)
         self.rect.centerx = WIDTH / 2
         self.rect.bottom = HEIGHT - 10
@@ -146,6 +168,8 @@ shoot_snd = pygame.mixer.Sound(os.path.join(snd_dir, 'Laser Shot.wav'))
 expl_snds = []
 for expl in ['expl3.wav', 'expl6.wav']:
     expl_snds.append(pygame.mixer.Sound(os.path.join(snd_dir, expl)))
+pygame.mixer.music.load(os.path.join(snd_dir, 'tgfcoder-FrozenJam-SeamlessLoop.ogg'))
+pygame.mixer.music.set_volume(0.4)
 
 all_sprites = pygame.sprite.Group()
 mobs = pygame.sprite.Group()
@@ -156,6 +180,9 @@ for i in range(8):
     m = Mob()
     all_sprites.add(m)
     mobs.add(m)
+
+score = 0
+pygame.mixer.music.play(loops=-1)
 
 # Game loop
 running = True
@@ -180,22 +207,27 @@ while running:
     for hit in hits:
         score += int((70 - hit.radius) / 2)
         random.choice(expl_snds).play()
-        m = Mob()
-        all_sprites.add(m)
-        mobs.add(m)
+        spawn_new_mob()
 
     # check mob player collision
-    hits = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_circle)
-    if hits:
-        running = False
+    hits = pygame.sprite.spritecollide(player, mobs, True, pygame.sprite.collide_circle)
+    for hit in hits:
+        player.shield -= hit.radius * 2
+        if player.shield <= 0:
+            running = False
+        else:
+            spawn_new_mob()
 
     # Draw / render
     screen.fill(BLACK)
     screen.blit(background, background_rect)
     all_sprites.draw(screen)
     draw_text(screen, str(score), 18, WIDTH/2, 10)
+    draw_shield_bar(screen, 5, 5, player.shield)
     # *after* drawing everything, flip the display
     pygame.display.flip()
+
+pygame.mixer.music.stop()
 
 # Game over screen
 running = True
