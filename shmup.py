@@ -150,6 +150,35 @@ class Bullet(pygame.sprite.Sprite):
             self.kill()
 
 
+class Explosion(pygame.sprite.Sprite):
+    def __init__(self, center, size):
+        pygame.sprite.Sprite.__init__(self)
+        self.size = int(size)
+        self.anim = []
+        for expl_img in expln_anim:
+            expl_img_resized = pygame.transform.scale(expl_img, (self.size, self.size))
+            self.anim.append(expl_img_resized)
+        self.image = self.anim[0]
+        self.image.set_colorkey(BLACK)
+        self.rect = self.image.get_rect()
+        self.rect.center = center
+        self.frame = 0
+        self.last_update = pygame.time.get_ticks()
+        self.frame_rate = 50
+
+    def update(self):
+        now = pygame.time.get_ticks()
+        if now - self.last_update > self.frame_rate:
+            self.frame += 1
+            if self.frame == len(self.anim):
+                self.kill()
+            else:
+                center = self.rect.center
+                self.image = self.anim[self.frame]
+                self.image.set_colorkey(BLACK)
+                self.rect.center = center
+
+
 # Load all game graphics
 background = pygame.image.load(os.path.join(img_dir, 'Space_Shooter_Background.png')).convert()
 background_rect = background.get_rect()
@@ -162,6 +191,11 @@ meteor_list = ['meteorBrown_med1.png', 'meteorBrown_med1.png', 'meteorBrown_med3
                'meteorBrown_tiny2.png', 'meteorBrown_big3.png', 'meteorBrown_big2.png']
 for img in meteor_list:
     meteor_imgs.append(pygame.image.load(os.path.join(img_dir, img)).convert())
+expln_anim = []
+for i in range(9):
+    filename = 'regularExplosion0{}.png'.format(i)
+    img = pygame.image.load(os.path.join(img_dir, filename)).convert()
+    expln_anim.append(img)
 
 # Load all game sounds
 shoot_snd = pygame.mixer.Sound(os.path.join(snd_dir, 'Laser Shot.wav'))
@@ -207,6 +241,8 @@ while running:
     for hit in hits:
         score += int((70 - hit.radius) / 2)
         random.choice(expl_snds).play()
+        explosion = Explosion(hit.rect.center, hit.rect.width * 0.9)
+        all_sprites.add(explosion)
         spawn_new_mob()
 
     # check mob player collision
@@ -216,6 +252,8 @@ while running:
         if player.shield <= 0:
             running = False
         else:
+            explosion = Explosion(hit.rect.center, hit.rect.width * 0.5)
+            all_sprites.add(explosion)
             spawn_new_mob()
 
     # Draw / render
