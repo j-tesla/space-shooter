@@ -1,4 +1,4 @@
-# Pygame template -- skeleton for a new pygame project
+# sprite example
 import pygame
 import random
 import os
@@ -23,13 +23,21 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(os.path.join(img_folder, 'p1_jump.png')).convert()
+        self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH / 2, HEIGHT / 2)
+        self.x_speed = 5
+        self.y_speed = 5
 
     def update(self):
-        self.rect.x += 5
+        self.rect.x += self.x_speed
+        self.rect.y += self.y_speed
         if self.rect.left > WIDTH:
             self.rect.right = 0
+        if self.rect.bottom > HEIGHT - 200:
+            self.y_speed = -self.y_speed
+        if self.rect.top < 200:
+            self.y_speed = -self.y_speed
 
 
 # initialise pygame and create window
@@ -56,7 +64,7 @@ while running:
     # Update
     all_sprites.update()
     # Draw / render
-    screen.fill(BLACK)
+    screen.fill(BLUE)
     all_sprites.draw(screen)
     # *after* drawing everything, flip the display
     pygame.display.flip()
