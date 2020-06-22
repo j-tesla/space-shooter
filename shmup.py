@@ -3,10 +3,11 @@
 # Art: Kenny <https://opengameart.org/users/kenney>
 # Music: Frozen Jam by tgfcoder <https://twitter.com/tgfcoder> licensed under CC-BY-3
 
-import pygame
+from heapq import heappush, heappop
+import sys
 import random
-import os
-from heapq import heapify, heappush, heappop
+from os import path
+import pygame
 
 WIDTH = 480
 HEIGHT = 600
@@ -21,9 +22,9 @@ BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 
 # set up assets folders
-game_dir = os.path.dirname(__file__)
-img_dir = os.path.join(game_dir, 'img')
-snd_dir = os.path.join(game_dir, 'snd')
+game_dir = path.dirname(__file__)
+img_dir = path.join(game_dir, 'img')
+snd_dir = path.join(game_dir, 'snd')
 
 # initialise pygame and create window
 pygame.init()
@@ -273,61 +274,61 @@ class Explosion(pygame.sprite.Sprite):
 
 
 # Load all game graphics
-background = pygame.image.load(os.path.join(img_dir, 'Space_Shooter_Background.png')).convert()
+background = pygame.image.load(path.join(img_dir, 'Space_Shooter_Background.png')).convert()
 background_rect = background.get_rect()
-player_img = pygame.image.load(os.path.join(img_dir, 'playerShip1_orange.png')).convert()
+player_img = pygame.image.load(path.join(img_dir, 'playerShip1_orange.png')).convert()
 player_img = pygame.transform.scale(player_img, (50, 38))
 player_img.set_colorkey(BLACK)
 player_img_mini = pygame.transform.scale(player_img, (25, 19)).convert()
 player_img_mini.set_colorkey(BLACK)
-bullet_img = pygame.image.load(os.path.join(img_dir, 'laserRed06.png')).convert()
+bullet_img = pygame.image.load(path.join(img_dir, 'laserRed06.png')).convert()
 bullet_img.set_colorkey(BLACK)
 meteor_imgs = []
 meteor_list = ['meteorBrown_med1.png', 'meteorBrown_med1.png', 'meteorBrown_med3.png',
                'meteorBrown_med3.png', 'meteorBrown_tiny1.png',
                'meteorBrown_tiny2.png', 'meteorBrown_big3.png', 'meteorBrown_big4.png']
 for file in meteor_list:
-    img = pygame.image.load(os.path.join(img_dir, file)).convert()
+    img = pygame.image.load(path.join(img_dir, file)).convert()
     img.set_colorkey(BLACK)
     meteor_imgs.append(img)
 expln_anim = []
 player_expln_anim = []
 for i in range(9):
-    filename = 'regularExplosion0{}.png'.format(i)
-    img = pygame.image.load(os.path.join(img_dir, filename)).convert()
+    Filename = 'regularExplosion0{}.png'.format(i)
+    img = pygame.image.load(path.join(img_dir, Filename)).convert()
     img.set_colorkey(BLACK)
     expln_anim.append(img)
     img.set_colorkey(BLACK)
-    filename = 'sonicExplosion0{}.png'.format(i)
-    img = pygame.image.load(os.path.join(img_dir, filename)).convert()
+    Filename = 'sonicExplosion0{}.png'.format(i)
+    img = pygame.image.load(path.join(img_dir, Filename)).convert()
     img.set_colorkey(BLACK)
     player_expln_anim.append(img)
-powerup_imgs = {'shield': pygame.image.load(os.path.join(img_dir, 'shield_silver.png')).convert(),
-                'gun': pygame.image.load(os.path.join(img_dir, 'bolt_gold.png')).convert(),
-                'pill': pygame.image.load(os.path.join(img_dir, 'pill_blue.png')).convert()}
+powerup_imgs = {'shield': pygame.image.load(path.join(img_dir, 'shield_silver.png')).convert(),
+                'gun': pygame.image.load(path.join(img_dir, 'bolt_gold.png')).convert(),
+                'pill': pygame.image.load(path.join(img_dir, 'pill_blue.png')).convert()}
 for key in list(powerup_imgs.keys()):
     powerup_imgs[key].set_colorkey(BLACK)
-shield_img = pygame.image.load(os.path.join(img_dir, 'shield1.png')).convert()
-shielded_player_img = pygame.image.load(os.path.join(img_dir, 'shielded_player.png')).convert()
+shield_img = pygame.image.load(path.join(img_dir, 'shield1.png')).convert()
+shielded_player_img = pygame.image.load(path.join(img_dir, 'shielded_player.png')).convert()
 shielded_player_img.set_colorkey(BLACK)
 
 # Load all game sounds
 if pygame.mixer.get_init():
-    shoot_snd = pygame.mixer.Sound(os.path.join(snd_dir, 'Laser Shot.wav'))
+    shoot_snd = pygame.mixer.Sound(path.join(snd_dir, 'Laser Shot.wav'))
     expl_snds = []
     for expl in ['expl3.wav', 'expl6.wav']:
-        expl_snds.append(pygame.mixer.Sound(os.path.join(snd_dir, expl)))
+        expl_snds.append(pygame.mixer.Sound(path.join(snd_dir, expl)))
     for sound in expl_snds:
         sound.set_volume(0.6)
-    player_expln_snd = pygame.mixer.Sound(os.path.join(snd_dir, 'rumble1.ogg'))
-    gun_power_snd = pygame.mixer.Sound(os.path.join(snd_dir, 'pow5.wav'))
+    player_expln_snd = pygame.mixer.Sound(path.join(snd_dir, 'rumble1.ogg'))
+    gun_power_snd = pygame.mixer.Sound(path.join(snd_dir, 'pow5.wav'))
     gun_power_snd.set_volume(0.6)
-    pill_power_snd = pygame.mixer.Sound(os.path.join(snd_dir, 'pow4.wav'))
+    pill_power_snd = pygame.mixer.Sound(path.join(snd_dir, 'pow4.wav'))
     pill_power_snd.set_volume(0.6)
-    lose_snd = pygame.mixer.Sound(os.path.join(snd_dir, 'sfx_lose.ogg'))
-    shield_up_snd = pygame.mixer.Sound(os.path.join(snd_dir, 'sfx_shieldUp.ogg'))
-    shield_down_snd = pygame.mixer.Sound(os.path.join(snd_dir, 'sfx_shieldDown.ogg'))
-    pygame.mixer.music.load(os.path.join(snd_dir, 'tgfcoder-FrozenJam-SeamlessLoop.ogg'))
+    lose_snd = pygame.mixer.Sound(path.join(snd_dir, 'sfx_lose.ogg'))
+    shield_up_snd = pygame.mixer.Sound(path.join(snd_dir, 'sfx_shieldUp.ogg'))
+    shield_down_snd = pygame.mixer.Sound(path.join(snd_dir, 'sfx_shieldDown.ogg'))
+    pygame.mixer.music.load(path.join(snd_dir, 'tgfcoder-FrozenJam-SeamlessLoop.ogg'))
     pygame.mixer.music.set_volume(0.4)
 
 all_sprites = pygame.sprite.Group()
@@ -344,16 +345,16 @@ if pygame.mixer.get_init():
     pygame.mixer.music.play(loops=-1)
 
 # Game loop
-running = True
-while running:
-    # keep loop running at the right speed
+RUNNING = True
+while RUNNING:
+    # keep loop RUNNING at the right speed
     clock.tick(FPS)
     # Process input (events)
     for event in pygame.event.get():
         # check closing window
         if event.type == pygame.QUIT:
-            running = False
-            exit(0)
+            RUNNING = False
+            sys.exit()
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 player.shoot()
@@ -411,7 +412,7 @@ while running:
             all_sprites.add(explosion)
             spawn_mob()
     if player.lives == 0 and not death_explosion.alive():
-        running = False
+        RUNNING = False
 
     # Draw / render
     screen.fill(BLACK)
@@ -427,15 +428,15 @@ if pygame.mixer.get_init():
     pygame.mixer.music.stop()
 
 # Game over screen
-running = True
-while running:
-    # keep loop running at the right speed
+RUNNING = True
+while RUNNING:
+    # keep loop RUNNING at the right speed
     clock.tick(FPS)
     # Process input (events)
     for event in pygame.event.get():
         # check closing window
         if event.type == pygame.QUIT:
-            running = False
+            RUNNING = False
 
     # Draw / render
     screen.fill(BLACK)

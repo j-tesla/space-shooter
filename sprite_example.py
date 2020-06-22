@@ -55,7 +55,7 @@ all_sprites.add(player)
 # Game loop
 running = True
 while running:
-    # keep loop running at the right speed
+    # keep loop RUNNING at the right speed
     clock.tick(FPS)
     # Process input (events)
     for event in pygame.event.get():
