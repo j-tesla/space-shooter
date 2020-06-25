@@ -3,10 +3,11 @@
 # Art: Kenny <https://opengameart.org/users/kenney>
 # Music: Frozen Jam by tgfcoder <https://twitter.com/tgfcoder> licensed under CC-BY-3
 
-from heapq import heappush, heappop
-import sys
 import random
+import sys
+from heapq import heappush, heappop
 from os import path
+
 import pygame
 
 WIDTH = 480
@@ -428,15 +429,15 @@ if pygame.mixer.get_init():
     pygame.mixer.music.stop()
 
 # Game over screen
-RUNNING = True
-while RUNNING:
+GAMEOVER = True
+while GAMEOVER:
     # keep loop RUNNING at the right speed
     clock.tick(FPS)
     # Process input (events)
     for event in pygame.event.get():
         # check closing window
         if event.type == pygame.QUIT:
-            RUNNING = False
+            GAMEOVER = False
 
     # Draw / render
     screen.fill(BLACK)
