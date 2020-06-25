@@ -19,6 +19,7 @@ YELLOW = (255, 255, 0)
 game_folder = os.path.dirname(__file__)
 img_folder = os.path.join(game_folder, 'img')
 
+
 class Player(pygame.sprite.Sprite):
     # sprite for the Player
     def __init__(self):
