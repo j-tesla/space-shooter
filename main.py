@@ -293,7 +293,6 @@ powerup_imgs = {'shield': pygame.image.load(path.join(img_dir, 'shield_silver.pn
                 'pill': pygame.image.load(path.join(img_dir, 'pill_blue.png')).convert()}
 for key in list(powerup_imgs.keys()):
     powerup_imgs[key].set_colorkey(BLACK)
-shield_img = pygame.image.load(path.join(img_dir, 'shield1.png')).convert()
 shielded_player_img = pygame.image.load(path.join(img_dir, 'shielded_player.png')).convert()
 shielded_player_img.set_colorkey(BLACK)
 
