@@ -14,6 +14,6 @@ YELLOW = (255, 255, 0)
 
 # set up assets folders
 game_dir = path.dirname(__file__)
-img_dir = path.join(game_dir, 'img')
-snd_dir = path.join(game_dir, 'snd')
-retro = path.join(img_dir, 'retro.ttf')
+img_dir = path.join(game_dir, 'resources', 'img')
+snd_dir = path.join(game_dir, 'resources', 'snd')
+retro = path.join('resources', 'retro.ttf')
