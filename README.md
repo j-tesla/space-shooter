@@ -38,5 +38,5 @@ pipenv install
 
 Run *main.py*
 ```sh
-pienv run python3 main.py
+pipenv run python3 main.py
 ```
