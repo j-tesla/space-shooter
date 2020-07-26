@@ -8,7 +8,6 @@ import sys
 from heapq import heappush, heappop
 
 import pygame
-from pygame.locals import *
 from settings import *
 
 
@@ -44,14 +43,14 @@ def main_menu():
         draw_text(screen, 'Instructions', 20, int(WIDTH/2), HEIGHT * 0.5 +55, WHITE, retro)
         click = False
         for event in pygame.event.get():
-            if event.type == QUIT:
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     sys.exit()
-            if event.type == MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
  
@@ -454,7 +453,7 @@ def game():
         # Process input (events)
         for event in pygame.event.get():
             # check closing window
-            if event.type == QUIT:
+            if event.type == pygame.QUIT:
                 GAMEOVER = False
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
@@ -476,7 +475,7 @@ def options():
         draw_text(screen, '"D" or "->" to move left', 20,  WIDTH / 2, HEIGHT * 0.45, GREEN, retro )
         draw_text(screen, '"Spacebar" to fire ', 20,  WIDTH / 2, HEIGHT * 0.45+50, GREEN, retro )
         for event in pygame.event.get():
-            if event.type == QUIT:
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             if event.type == KEYDOWN:
