@@ -16,4 +16,4 @@ YELLOW = (255, 255, 0)
 game_dir = path.dirname(__file__)
 img_dir = path.join(game_dir, 'img')
 snd_dir = path.join(game_dir, 'snd')
-retro ="./img/retro.ttf"
+retro = path.join(img_dir, 'retro.ttf')
