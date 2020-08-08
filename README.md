@@ -16,7 +16,7 @@
 
 + [python3](https://www.python.org/downloads/) 
 + [pip](https://pip.pypa.io/en/stable/installing/)
-+ [pipenv](https://pipenv-fork.readthedocs.io/en/latest/install.html#installing-pipenv)
++ [pipenv](https://pipenv-fork.readthedocs.io/en/latest/install.html#installing-pipenv) (suggested)
 
 #### Clone
 
