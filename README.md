@@ -43,6 +43,6 @@ pipenv run python3 main.py
 
 ### License
 
-[GitHub](https://img.shields.io/github/license/j-tesla/space-shooter)
+![GitHub License](https://img.shields.io/github/license/j-tesla/space-shooter)
 
 This project is licensed under the MIT License. For details, check the [LICENSE](LICENSE) file.
