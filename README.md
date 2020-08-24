@@ -20,13 +20,13 @@
 
 #### Clone
 
-```sh
+```shell script
 git clone https://github.com/j-tesla/space-shooter.git
 ```
 
 #### Setup
 
-```sh
+```shell script
 cd space-shooter
 ```
 Install dependencies to a virtual envionment
@@ -37,7 +37,7 @@ pipenv install
 ### Usage
 
 Run *main.py*
-```sh
+```shell script
 pipenv run python3 main.py
 ```
 
