@@ -18,17 +18,17 @@
 
 + [python3](https://www.python.org/downloads/) 
 + [pip](https://pip.pypa.io/en/stable/installing/)
-+ [pipenv](https://pipenv-fork.readthedocs.io/en/latest/install.html#installing-pipenv)
++ [pipenv](https://pipenv-fork.readthedocs.io/en/latest/install.html#installing-pipenv) (suggested)
 
 #### Clone
 
-```sh
+```shell script
 git clone https://github.com/j-tesla/space-shooter.git
 ```
 
 #### Setup
 
-```sh
+```shell script
 cd space-shooter
 ```
 Install dependencies to a virtual envionment
@@ -39,6 +39,12 @@ pipenv install
 ### Usage
 
 Run *main.py*
-```sh
+```shell script
 pipenv run python3 main.py
 ```
+
+### License
+
+![GitHub License](https://img.shields.io/github/license/j-tesla/space-shooter)
+
+This project is licensed under the MIT License. For details, check the [LICENSE](LICENSE) file.
