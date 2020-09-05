@@ -10,6 +10,8 @@
 
 *A *shmup* game*
 
+<img src="space-shooter.png" alt="screenshot"></img>
+
 ### Installation
 
 #### Prerequisites
