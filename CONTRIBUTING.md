@@ -1,11 +1,11 @@
 # Thank You
 
-Thank you for choosing my project. You are helping make the project bigger.
+Thank you for choosing my project. You are helping in making the project bigger.
 
-<!-- Follow the golder rule
+Follow the golden rule:
 
-> Code, Document, Raise Issues and Review like you have to explain everything to a new developer without saying a word.
--->
+> Code, Document, Raise Issues and Review as if you have to explain everything
+> to a new developer without saying a word.
 
 ## First Time
 
@@ -27,9 +27,9 @@ and then start working on it.
 
 If you find a bug in the code or a problem while running the code, please open
 an issue and provide some details like how to reproduce it. If you feel some
-feature is miising or the documentation lacks in some way, feel free to open an
+feature is missing or the documentation lacks in some way, feel free to open an
 issue in this case too. If you are able to solve the issue, sending a pull
-request is encouraged rather than just opening an issue.
+request is highly appreciated.
 
 ## Sending a PR
 
