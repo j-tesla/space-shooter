@@ -10,7 +10,6 @@ from heapq import heappush, heappop
 import pygame
 from settings import *
 
-
 # initialise pygame and create window
 pygame.init()
 try:
@@ -44,7 +43,7 @@ def options():
 
 def main_menu():
     while True:
-        screen.fill((0,0,0))
+        screen.fill((0, 0, 0))
         draw_text(screen, 'Space shooter', 48, WIDTH / 2, HEIGHT * 0.15, GREEN, retro)
         mx, my = pygame.mouse.get_pos()
         button_1 = pygame.Rect(int(WIDTH / 2) - 100, int(HEIGHT * 0.5) - 40, 200, 50)
@@ -71,7 +70,7 @@ def main_menu():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
- 
+
         pygame.display.update()
         clock.tick(60)
 
