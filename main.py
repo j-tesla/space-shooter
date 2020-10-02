@@ -25,10 +25,10 @@ def options():
     running = True
     while running:
         screen.fill((0, 0, 0))
-        draw_text(screen, 'Instructions', 40, WIDTH / 2, HEIGHT * 0.15, RED, retro)
-        draw_text(screen, '"W" or "<-" to move left', 20, WIDTH / 2, HEIGHT * 0.45 - 50, GREEN, retro)
-        draw_text(screen, '"D" or "->" to move left', 20, WIDTH / 2, HEIGHT * 0.45, GREEN, retro)
-        draw_text(screen, '"Spacebar" to fire ', 20, WIDTH / 2, HEIGHT * 0.45 + 50, GREEN, retro)
+        draw_text(screen, 'Instructions', 40, WIDTH / 2, HEIGHT * 0.15, RED)
+        draw_text(screen, '"W" or "<-" to move left', 20, WIDTH / 2, HEIGHT * 0.45 - 50, GREEN)
+        draw_text(screen, '"D" or "->" to move left', 20, WIDTH / 2, HEIGHT * 0.45, GREEN)
+        draw_text(screen, '"Spacebar" to fire ', 20, WIDTH / 2, HEIGHT * 0.45 + 50, GREEN)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -44,7 +44,7 @@ def options():
 def main_menu():
     while True:
         screen.fill((0, 0, 0))
-        draw_text(screen, 'Space shooter', 48, WIDTH / 2, HEIGHT * 0.15, GREEN, retro)
+        draw_text(screen, 'Space shooter', 48, WIDTH / 2, HEIGHT * 0.15, GREEN)
         mx, my = pygame.mouse.get_pos()
         button_1 = pygame.Rect(int(WIDTH / 2) - 100, int(HEIGHT * 0.5) - 40, 200, 50)
         button_2 = pygame.Rect(int(WIDTH / 2) - 100, int(HEIGHT * 0.5) + 40, 200, 50)
@@ -56,8 +56,8 @@ def main_menu():
                 options()
         pygame.draw.rect(screen, (255, 0, 0), button_1)
         pygame.draw.rect(screen, (255, 0, 0), button_2)
-        draw_text(screen, 'Play', 20, int(WIDTH / 2), HEIGHT * 0.5 - 25, WHITE, retro)
-        draw_text(screen, 'Instructions', 20, int(WIDTH / 2), HEIGHT * 0.5 + 55, WHITE, retro)
+        draw_text(screen, 'Play', 20, int(WIDTH / 2), HEIGHT * 0.5 - 25, WHITE)
+        draw_text(screen, 'Instructions', 20, int(WIDTH / 2), HEIGHT * 0.5 + 55, WHITE)
         click = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -75,7 +75,7 @@ def main_menu():
         clock.tick(60)
 
 
-def draw_text(surf, text, size, x, y, color=WHITE, font_name=pygame.font.match_font('arial')):
+def draw_text(surf, text, size, x, y, color=WHITE, font_name=retro):
     font = pygame.font.Font(font_name, size)
     text_surface = font.render(text, True, color)
     text_rect = text_surface.get_rect()
