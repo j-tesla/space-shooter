@@ -290,8 +290,8 @@ class Player(pygame.sprite.Sprite):
             self.rect.left = 0
             
         #move character with mosue movement
-        mousex = 0 #variable for storing mouse position change
-        mouseposition = 0  # variable for storing mouse absolute position
+        mousex = 0 #made a variable for storing mouse position change
+        mouseposition = 0  # made a variable for storing mouse absolute position
         if pygame.MOUSEMOTION:
             mouseX, mouseY = pygame.mouse.get_rel()
             mousex = mouseX
