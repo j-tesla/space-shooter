@@ -256,7 +256,7 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         # invulnerable time
         if self.just_started:
-            if self.flicker % 2 == 0:
+            if (self.flicker // 4) % 2 == 0:
                 self.rect.centery = HEIGHT + 200
             else:
                 self.rect.bottom = HEIGHT - 10
