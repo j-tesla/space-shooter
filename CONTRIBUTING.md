@@ -2,10 +2,10 @@
 
 Thank you for choosing my project. You are helping in making the project bigger.
 
-<-- Follow the golden rule
+Follow the golden rule:
 > Code, Document, Raise Issues and Review as if you have to explain everything
 to a new developer without saying a word.
--->
+
 
 ## First Time
 
