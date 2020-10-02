@@ -242,27 +242,31 @@ class Player(pygame.sprite.Sprite):
         self.hidden = False
         self.hide_timer = pygame.time.get_ticks()
         self.hidden_time = 2000
+        self.gun_pos_y = HEIGHT - 48
         self.gun = 1
         self.gun_power_time_heap = []
         self.power_timer = 7000
         self.shield_up = False
         self.shield_up_time = pygame.time.get_ticks()
-        self.invul = 1000
+        self.invul = 2000
         self.start_time = pygame.time.get_ticks()
         self.just_started = True
+        self.flicker = 0
 
     def update(self):
         # invulnerable time
         if self.just_started:
-            if pygame.time.get_ticks() % 10 > 4:
+            if self.flicker % 2 == 0:
                 self.rect.centery = HEIGHT + 200
             else:
                 self.rect.bottom = HEIGHT - 10
+            self.flicker += 1
 
         if self.just_started and pygame.time.get_ticks() - self.start_time > self.invul:
             self.just_started = False
+            self.flicker = 0
             self.rect.bottom = HEIGHT - 10
-                
+
         # unhide
         if self.hidden and pygame.time.get_ticks() - self.hide_timer > self.hidden_time:
             self.hidden = False
@@ -271,6 +275,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.bottom = HEIGHT - 10
             self.start_time = pygame.time.get_ticks()
             self.just_started = True
+            self.flicker = 0
         # gun timer
         if len(self.gun_power_time_heap) > 0:
             if pygame.time.get_ticks() - self.gun_power_time_heap[0] > self.power_timer:
@@ -303,16 +308,16 @@ class Player(pygame.sprite.Sprite):
     def shoot(self):
         if not self.hidden:
             if self.gun % 2 != 0:
-                spawn_bullet(self.rect.centerx, self.rect.top)
+                spawn_bullet(self.rect.centerx, self.gun_pos_y)
                 if pygame.mixer.get_init():
                     shoot_snd.play()
                 for it in range(1, int((self.gun - 1) / 2) + 1):
-                    spawn_bullet(self.rect.centerx + it * 15, self.rect.top)
-                    spawn_bullet(self.rect.centerx - it * 15, self.rect.top)
+                    spawn_bullet(self.rect.centerx + it * 15, self.gun_pos_y)
+                    spawn_bullet(self.rect.centerx - it * 15, self.gun_pos_y)
             else:
                 for it in range(1, int((self.gun / 2) + 1)):
-                    spawn_bullet(self.rect.centerx + it * 15 - 7, self.rect.top)
-                    spawn_bullet(self.rect.centerx - it * 15 + 7, self.rect.top)
+                    spawn_bullet(self.rect.centerx + it * 15 - 7, self.gun_pos_y)
+                    spawn_bullet(self.rect.centerx - it * 15 + 7, self.gun_pos_y)
 
     def hide(self):
         # hide the player temporarily
