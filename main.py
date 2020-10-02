@@ -5,11 +5,11 @@
 
 import random
 import sys
-from heapq import heappush, heappop
+from heapq import heappop, heappush
 
 import pygame
-from settings import *
 
+from settings import *
 
 # initialise pygame and create window
 pygame.init()
