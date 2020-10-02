@@ -170,7 +170,7 @@ def game():
         # check mob player collision
         hits = pygame.sprite.spritecollide(player, mobs, True, pygame.sprite.collide_circle)
         for hit in hits:
-            if not player.shield_up:
+            if not player.shield_up and not player.just_started:
                 player.health -= hit.radius * 2
             if player.health <= 0:
                 if pygame.mixer.get_init():
@@ -182,10 +182,11 @@ def game():
                 player.lives -= 1
                 # player.health = 100
             else:
-                if pygame.mixer.get_init():
-                    random.choice(expl_snds).play()
-                explosion = Explosion(expln_anim, hit.rect.center, hit.rect.width * 0.5)
-                all_sprites.add(explosion)
+                if not player.just_started:
+                    if pygame.mixer.get_init():
+                        random.choice(expl_snds).play()
+                    explosion = Explosion(expln_anim, hit.rect.center, hit.rect.width * 0.5)
+                    all_sprites.add(explosion)
                 spawn_mob()
         if player.lives == 0 and not death_explosion.alive():
             RUNNING = False
@@ -246,14 +247,30 @@ class Player(pygame.sprite.Sprite):
         self.power_timer = 7000
         self.shield_up = False
         self.shield_up_time = pygame.time.get_ticks()
+        self.invul = 1000
+        self.start_time = pygame.time.get_ticks()
+        self.just_started = True
 
     def update(self):
+        # invulnerable time
+        if self.just_started:
+            if pygame.time.get_ticks() % 10 > 4:
+                self.rect.centery = HEIGHT + 200
+            else:
+                self.rect.bottom = HEIGHT - 10
+
+        if self.just_started and pygame.time.get_ticks() - self.start_time > self.invul:
+            self.just_started = False
+            self.rect.bottom = HEIGHT - 10
+                
         # unhide
         if self.hidden and pygame.time.get_ticks() - self.hide_timer > self.hidden_time:
             self.hidden = False
             self.health = 100
             self.rect.centerx = int(WIDTH / 2)
             self.rect.bottom = HEIGHT - 10
+            self.start_time = pygame.time.get_ticks()
+            self.just_started = True
         # gun timer
         if len(self.gun_power_time_heap) > 0:
             if pygame.time.get_ticks() - self.gun_power_time_heap[0] > self.power_timer:
