@@ -1,11 +1,10 @@
 # Shoot'em up
-
 # Art: Kenny <https://opengameart.org/users/kenney>
 # Music: Frozen Jam by tgfcoder <https://twitter.com/tgfcoder> licensed under CC-BY-3
-
 import random
 import sys
-from heapq import heappop, heappush
+from heapq import heappop
+from heapq import heappush
 
 import pygame
 
