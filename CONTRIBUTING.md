@@ -52,3 +52,6 @@ and sending PRs:
 ## Communication
 
 Ping me on Discord: transpondster#7450
+
+
+Also take a look at the [GitHub community guidelines](https://docs.github.com/articles/github-community-guidelines).
