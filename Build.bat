@@ -11,7 +11,7 @@ where /q pip
 IF ERRORLEVEL 1 (
     ECHO pip is missing. please install it from https://pip.pypa.io/en/stable/installing/# .
     EXIT /B
-) 
+)
 
 :: check and download dependencies.
 echo ==== checking dependencies
@@ -27,4 +27,3 @@ pipenv run pyinstaller main.py --noconfirm ^
     --add-data="resources;resources" ^
 	--add-data="README.md;." ^
 	--add-data="resources;resources"
-
