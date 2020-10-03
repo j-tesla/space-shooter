@@ -16,10 +16,10 @@ YELLOW = (255, 255, 0)
 # set up assets folders
 
 # https://pyinstaller.readthedocs.io/en/stable/runtime-information.html
-if getattr(sys, 'frozen', False):
+if getattr(sys, "frozen", False):
     game_dir = sys._MEIPASS
 else:
     game_dir = path.dirname(path.abspath(__file__))
-img_dir = path.join(game_dir, 'resources', 'img')
-snd_dir = path.join(game_dir, 'resources', 'snd')
-retro = path.join(game_dir, 'resources', 'retro.ttf')
+img_dir = path.join(game_dir, "resources", "img")
+snd_dir = path.join(game_dir, "resources", "snd")
+retro = path.join(game_dir, "resources", "retro.ttf")
