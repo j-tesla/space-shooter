@@ -224,16 +224,17 @@ def game():
         # keep loop RUNNING at the right speed
         clock.tick(FPS)
         # Process input (events)
-        
+
         # Draw / render
         screen.fill(BLACK)
         draw_text(screen, "GAME OVER", 48, WIDTH / 2, HEIGHT * 0.45)
         draw_text(screen, "score: " + str(score), 27, WIDTH / 2,
                   HEIGHT * 0.45 + 56, YELLOW)
 
-        text_color = (255,255,255)
-        button_color = (255,0,0)
-        menu_button = pygame.draw.rect(screen,button_color,[WIDTH // 2 - 70, HEIGHT * 0.75 , 140,40])
+        text_color = (255, 255, 255)
+        button_color = (255, 0, 0)
+        menu_button = pygame.draw.rect(
+            screen, button_color, [WIDTH // 2 - 70, HEIGHT * 0.75, 140, 40])
         draw_text(screen, 'MENU', 30, WIDTH // 2, int(HEIGHT * 0.75), WHITE)
         # *after* drawing everything, flip the display
         pygame.display.flip()
