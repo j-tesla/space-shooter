@@ -48,25 +48,20 @@ def main_menu():
     while True:
         screen.fill((0, 0, 0))
         draw_text(screen, "Space shooter", 48, WIDTH / 2, HEIGHT * 0.15, GREEN)
-        mx, my = pygame.mouse.get_pos()
+        mouse = pygame.mouse.get_pos()
         button_1 = pygame.Rect(
             int(WIDTH / 2) - 100,
             int(HEIGHT * 0.5) - 40, 200, 50)
         button_2 = pygame.Rect(
             int(WIDTH / 2) - 100,
             int(HEIGHT * 0.5) + 40, 200, 50)
-        if button_1.collidepoint((mx, my)):
-            if click:
-                game()
-        if button_2.collidepoint((mx, my)):
-            if click:
-                options()
+
         pygame.draw.rect(screen, (255, 0, 0), button_1)
         pygame.draw.rect(screen, (255, 0, 0), button_2)
         draw_text(screen, "Play", 20, int(WIDTH / 2), HEIGHT * 0.5 - 25, WHITE)
         draw_text(screen, "Instructions", 20, int(WIDTH / 2),
                   HEIGHT * 0.5 + 55, WHITE)
-        click = False
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -77,7 +72,10 @@ def main_menu():
                     sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
-                    click = True
+                    if button_1.collidepoint(mouse):
+                        game()
+                    if button_2.collidepoint(mouse):
+                        options()
 
         pygame.display.update()
         clock.tick(60)
