@@ -222,6 +222,21 @@ def game():
         # keep loop RUNNING at the right speed
         clock.tick(FPS)
         # Process input (events)
+
+        # Draw / render
+        screen.fill(BLACK)
+        draw_text(screen, "GAME OVER", 48, WIDTH / 2, HEIGHT * 0.45)
+        draw_text(screen, "score: " + str(score), 27, WIDTH / 2,
+                  HEIGHT * 0.45 + 56, YELLOW)
+
+        text_color = (255, 255, 255)
+        button_color = (255, 0, 0)
+        menu_button = pygame.draw.rect(
+            screen, button_color, [WIDTH // 2 - 70, HEIGHT * 0.75, 140, 40])
+        draw_text(screen, "MENU", 30, WIDTH // 2, int(HEIGHT * 0.75), WHITE)
+        # *after* drawing everything, flip the display
+        pygame.display.flip()
+
         for event in pygame.event.get():
             # check closing window
             if event.type == pygame.QUIT:
@@ -229,13 +244,13 @@ def game():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     GAMEOVER = False
-        # Draw / render
-        screen.fill(BLACK)
-        draw_text(screen, "GAME OVER", 48, WIDTH / 2, HEIGHT * 0.45)
-        draw_text(screen, "score: " + str(score), 27, WIDTH / 2,
-                  HEIGHT * 0.45 + 56, YELLOW)
-        # *after* drawing everything, flip the display
-        pygame.display.flip()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                if event.button == 1 and menu_button.collidepoint(mouse_pos):
+                    GAMEOVER = False
+                    player.__init__()
+                    main_menu()
+
     pygame.quit()
     sys.exit()
 
