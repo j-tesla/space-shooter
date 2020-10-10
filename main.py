@@ -125,6 +125,11 @@ def game():
     if pygame.mixer.get_init():
         pygame.mixer.music.play(loops=-1)
 
+    player = Player()
+    all_sprites.add(player)
+    for i in range(8):
+        spawn_mob()
+
     score = 0
     # Game loop
     RUNNING = True
@@ -201,6 +206,8 @@ def game():
                     all_sprites.add(explosion)
                 spawn_mob()
         if player.lives == 0 and not death_explosion.alive():
+            for sprite in all_sprites:
+                sprite.kill()
             RUNNING = False
 
         # Draw / render
@@ -561,9 +568,5 @@ if __name__ == "__main__":
     mobs = pygame.sprite.Group()
     bullets = pygame.sprite.Group()
     powerups = pygame.sprite.Group()
-    player = Player()
-    all_sprites.add(player)
-    for i in range(8):
-        spawn_mob()
 
     main_menu()
