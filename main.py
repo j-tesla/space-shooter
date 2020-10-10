@@ -239,7 +239,8 @@ def game():
         text_color = (255, 255, 255)
         button_color = (255, 0, 0)
         menu_button = pygame.draw.rect(
-            screen, button_color, [WIDTH // 2 - 70, int(HEIGHT) * 0.75, 140, 40])
+            screen, button_color,
+            [WIDTH // 2 - 70, int(HEIGHT) * 0.75, 140, 40])
         draw_text(screen, "MENU", 30, WIDTH // 2, int(HEIGHT * 0.75), WHITE)
         # *after* drawing everything, flip the display
         pygame.display.flip()
