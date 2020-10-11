@@ -24,7 +24,7 @@ clock = pygame.time.Clock()
 def options():
     running = True
     while running:
-        screen.fill((0, 0, 0))
+        screen.fill(BLACK)
         draw_text(screen, "Instructions", 40, WIDTH / 2, HEIGHT * 0.15, RED)
         draw_text(screen, '"W" or "<-" to move left', 20, WIDTH / 2,
                   HEIGHT * 0.45 - 50, GREEN)
@@ -46,7 +46,7 @@ def options():
 
 def main_menu():
     while True:
-        screen.fill((0, 0, 0))
+        screen.fill(BLACK)
         draw_text(screen, "Space shooter", 48, WIDTH / 2, HEIGHT * 0.15, GREEN)
         mouse = pygame.mouse.get_pos()
         button_1 = pygame.Rect(
@@ -233,14 +233,18 @@ def game():
         # Draw / render
         screen.fill(BLACK)
         draw_text(screen, "GAME OVER", 48, WIDTH / 2, HEIGHT * 0.45)
-        draw_text(screen, "score: " + str(score), 27, WIDTH / 2,
-                  HEIGHT * 0.45 + 56, YELLOW)
+        draw_text(
+            screen,
+            "score: " + str(score),
+            27,
+            WIDTH / 2,
+            int(HEIGHT * 0.45) + 56,
+            YELLOW,
+        )
 
-        text_color = (255, 255, 255)
-        button_color = (255, 0, 0)
         menu_button = pygame.draw.rect(
-            screen, button_color,
-            [WIDTH // 2 - 70, int(HEIGHT) * 0.75, 140, 40])
+            screen, RED,
+            [WIDTH // 2 - 70, int(HEIGHT * 0.75), 140, 40])
         draw_text(screen, "MENU", 30, WIDTH // 2, int(HEIGHT * 0.75), WHITE)
         # *after* drawing everything, flip the display
         pygame.display.flip()
