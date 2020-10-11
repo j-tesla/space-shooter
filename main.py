@@ -219,7 +219,8 @@ def game():
                 player.shield_power()
 
         # check mob player collision
-        hits = pygame.sprite.spritecollide(player, mobs, not player.just_started,
+        hits = pygame.sprite.spritecollide(player, mobs,
+                                           not player.just_started,
                                            pygame.sprite.collide_circle)
         for hit in hits:
             if not player.shield_up and not player.just_started:
