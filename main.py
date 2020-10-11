@@ -45,6 +45,7 @@ def options():
 
 
 def main_menu():
+    is_selected = {"button_1": False, "button_2": False}
     while True:
         screen.fill(BLACK)
         draw_text(screen, "Space shooter", 48, WIDTH / 2, HEIGHT * 0.15, GREEN)
@@ -56,12 +57,28 @@ def main_menu():
             int(WIDTH / 2) - 100,
             int(HEIGHT * 0.5) + 40, 200, 50)
 
-        pygame.draw.rect(screen, (255, 0, 0), button_1)
-        pygame.draw.rect(screen, (255, 0, 0), button_2)
-        draw_text(screen, "Play", 20, int(WIDTH / 2), HEIGHT * 0.5 - 25, WHITE)
-        draw_text(screen, "Instructions", 20, int(WIDTH / 2),
-                  HEIGHT * 0.5 + 55, WHITE)
+        if is_selected["button_1"]:
+            pygame.draw.rect(screen, WHITE, button_1)
+            draw_text(screen, "Play", 20, int(WIDTH / 2), int(HEIGHT * 0.5 - 25), RED)
+        else:
+            pygame.draw.rect(screen, RED, button_1)
+            draw_text(screen, "Play", 20, int(WIDTH / 2), int(HEIGHT * 0.5 - 25), WHITE)
+        if is_selected["button_2"]:
+            pygame.draw.rect(screen, WHITE, button_2)
+            draw_text(screen, "Instructions", 20, int(WIDTH / 2), int(HEIGHT * 0.5 + 55), RED)
+        else:
+            pygame.draw.rect(screen, RED, button_2)
+            draw_text(screen, "Instructions", 20, int(WIDTH / 2), int(HEIGHT * 0.5 + 55), WHITE)
 
+        if button_1.collidepoint(mouse):
+            is_selected["button_1"] = True
+            is_selected["button_2"] = False
+        elif button_2.collidepoint(mouse):
+            is_selected["button_2"] = True
+            is_selected["button_1"] = False
+        elif pygame.mouse.get_rel() != (0, 0):
+            for button in is_selected:
+                is_selected[button] = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -70,11 +87,23 @@ def main_menu():
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     sys.exit()
+                if event.key == pygame.K_SPACE:
+                    if is_selected["button_1"]:
+                        game()
+                    elif is_selected["button_2"]:
+                        options()
+                if event.key == pygame.K_UP or event.key == pygame.K_w:
+                    is_selected["button_1"] = True
+                    is_selected["button_2"] = False
+                elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                    is_selected["button_1"] = False
+                    is_selected["button_2"] = True
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
-                    if button_1.collidepoint(mouse):
+                    if is_selected["button_1"]:
                         game()
-                    if button_2.collidepoint(mouse):
+                    elif is_selected["button_2"]:
                         options()
 
         pygame.display.update()
@@ -224,6 +253,7 @@ def game():
         pygame.mixer.music.stop()
 
     # Game over screen
+    is_selected = {"menu_button": False}
     GAMEOVER = True
     while GAMEOVER:
         # keep loop RUNNING at the right speed
@@ -242,12 +272,26 @@ def game():
             YELLOW,
         )
 
-        menu_button = pygame.draw.rect(
-            screen, RED,
-            [WIDTH // 2 - 70, int(HEIGHT * 0.75), 140, 40])
-        draw_text(screen, "MENU", 30, WIDTH // 2, int(HEIGHT * 0.75), WHITE)
+        if is_selected["menu_button"]:
+            menu_button = pygame.draw.rect(
+                screen, WHITE,
+                [WIDTH // 2 - 70, int(HEIGHT * 0.75), 140, 40])
+            draw_text(screen, "MENU", 30, WIDTH // 2, int(HEIGHT * 0.75), RED)
+        else:
+            menu_button = pygame.draw.rect(
+                screen, RED,
+                [WIDTH // 2 - 70, int(HEIGHT * 0.75), 140, 40])
+            draw_text(screen, "MENU", 30, WIDTH // 2, int(HEIGHT * 0.75), WHITE)
         # *after* drawing everything, flip the display
         pygame.display.flip()
+
+        mouse_pos = pygame.mouse.get_pos()
+
+        if menu_button.collidepoint(mouse_pos):
+            is_selected["menu_button"] = True
+        elif pygame.mouse.get_rel() != (0, 0):
+            for button in is_selected:
+                is_selected[button] = False
 
         for event in pygame.event.get():
             # check closing window
@@ -256,9 +300,14 @@ def game():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     GAMEOVER = False
+                if event.key == pygame.K_DOWN or event.key == pygame.K_UP:
+                    is_selected["menu_button"] = not is_selected["menu_button"]
+                if event.key == pygame.K_SPACE and is_selected["menu_button"]:
+                    GAMEOVER = False
+                    player.__init__()
+                    main_menu()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = pygame.mouse.get_pos()
-                if event.button == 1 and menu_button.collidepoint(mouse_pos):
+                if event.button == 1 and is_selected["menu_button"]:
                     GAMEOVER = False
                     player.__init__()
                     main_menu()
@@ -534,11 +583,11 @@ if __name__ == "__main__":
         player_expln_anim.append(img)
     powerup_imgs = {
         "shield":
-        pygame.image.load(path.join(img_dir, "shield_silver.png")).convert(),
+            pygame.image.load(path.join(img_dir, "shield_silver.png")).convert(),
         "gun":
-        pygame.image.load(path.join(img_dir, "bolt_gold.png")).convert(),
+            pygame.image.load(path.join(img_dir, "bolt_gold.png")).convert(),
         "pill":
-        pygame.image.load(path.join(img_dir, "pill_blue.png")).convert(),
+            pygame.image.load(path.join(img_dir, "pill_blue.png")).convert(),
     }
     for key in list(powerup_imgs.keys()):
         powerup_imgs[key].set_colorkey(BLACK)
