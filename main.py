@@ -201,7 +201,8 @@ def game():
                 if not player.just_started:
                     if pygame.mixer.get_init():
                         random.choice(expl_snds).play()
-                    explosion = Explosion(expln_anim, hit.rect.center, hit.rect.width * 0.5)
+                    explosion = Explosion(expln_anim, hit.rect.center,
+                                          hit.rect.width * 0.5)
                     all_sprites.add(explosion)
                 spawn_mob()
         if player.lives == 0 and not death_explosion.alive():
@@ -232,9 +233,18 @@ def game():
         # Draw / render
         screen.fill(BLACK)
         draw_text(screen, "GAME OVER", 48, WIDTH / 2, HEIGHT * 0.45)
-        draw_text(screen, "score: " + str(score), 27, WIDTH / 2, int(HEIGHT * 0.45) + 56, YELLOW)
+        draw_text(
+            screen,
+            "score: " + str(score),
+            27,
+            WIDTH / 2,
+            int(HEIGHT * 0.45) + 56,
+            YELLOW,
+        )
 
-        menu_button = pygame.draw.rect(screen, RED, [WIDTH // 2 - 70, int(HEIGHT * 0.75), 140, 40])
+        menu_button = pygame.draw.rect(
+            screen, RED,
+            [WIDTH // 2 - 70, int(HEIGHT * 0.75), 140, 40])
         draw_text(screen, "MENU", 30, WIDTH // 2, int(HEIGHT * 0.75), WHITE)
         # *after* drawing everything, flip the display
         pygame.display.flip()
@@ -524,11 +534,11 @@ if __name__ == "__main__":
         player_expln_anim.append(img)
     powerup_imgs = {
         "shield":
-            pygame.image.load(path.join(img_dir, "shield_silver.png")).convert(),
+        pygame.image.load(path.join(img_dir, "shield_silver.png")).convert(),
         "gun":
-            pygame.image.load(path.join(img_dir, "bolt_gold.png")).convert(),
+        pygame.image.load(path.join(img_dir, "bolt_gold.png")).convert(),
         "pill":
-            pygame.image.load(path.join(img_dir, "pill_blue.png")).convert(),
+        pygame.image.load(path.join(img_dir, "pill_blue.png")).convert(),
     }
     for key in list(powerup_imgs.keys()):
         powerup_imgs[key].set_colorkey(BLACK)
