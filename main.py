@@ -59,16 +59,20 @@ def main_menu():
 
         if is_selected["button_1"]:
             pygame.draw.rect(screen, WHITE, button_1)
-            draw_text(screen, "Play", 20, int(WIDTH / 2), int(HEIGHT * 0.5 - 25), RED)
+            draw_text(screen, "Play", 20, int(WIDTH / 2),
+                      int(HEIGHT * 0.5 - 25), RED)
         else:
             pygame.draw.rect(screen, RED, button_1)
-            draw_text(screen, "Play", 20, int(WIDTH / 2), int(HEIGHT * 0.5 - 25), WHITE)
+            draw_text(screen, "Play", 20, int(WIDTH / 2),
+                      int(HEIGHT * 0.5 - 25), WHITE)
         if is_selected["button_2"]:
             pygame.draw.rect(screen, WHITE, button_2)
-            draw_text(screen, "Instructions", 20, int(WIDTH / 2), int(HEIGHT * 0.5 + 55), RED)
+            draw_text(screen, "Instructions", 20, int(
+                WIDTH / 2), int(HEIGHT * 0.5 + 55), RED)
         else:
             pygame.draw.rect(screen, RED, button_2)
-            draw_text(screen, "Instructions", 20, int(WIDTH / 2), int(HEIGHT * 0.5 + 55), WHITE)
+            draw_text(screen, "Instructions", 20, int(
+                WIDTH / 2), int(HEIGHT * 0.5 + 55), WHITE)
 
         if button_1.collidepoint(mouse):
             is_selected["button_1"] = True
@@ -281,7 +285,8 @@ def game():
             menu_button = pygame.draw.rect(
                 screen, RED,
                 [WIDTH // 2 - 70, int(HEIGHT * 0.75), 140, 40])
-            draw_text(screen, "MENU", 30, WIDTH // 2, int(HEIGHT * 0.75), WHITE)
+            draw_text(screen, "MENU", 30, WIDTH //
+                      2, int(HEIGHT * 0.75), WHITE)
         # *after* drawing everything, flip the display
         pygame.display.flip()
 
@@ -583,7 +588,8 @@ if __name__ == "__main__":
         player_expln_anim.append(img)
     powerup_imgs = {
         "shield":
-            pygame.image.load(path.join(img_dir, "shield_silver.png")).convert(),
+            pygame.image.load(
+                path.join(img_dir, "shield_silver.png")).convert(),
         "gun":
             pygame.image.load(path.join(img_dir, "bolt_gold.png")).convert(),
         "pill":
