@@ -22,11 +22,11 @@ clock = pygame.time.Clock()
 
 
 def options():
-    running = True
-    while running:
+    showing_instructions = True
+    while showing_instructions:
         screen.fill(BLACK)
         draw_text(screen, "Instructions", 40, WIDTH / 2, HEIGHT * 0.15, RED)
-        draw_text(screen, '"W" or "<-" to move left', 20, WIDTH / 2,
+        draw_text(screen, '"A" or "<-" to move left', 20, WIDTH / 2,
                   HEIGHT * 0.45 - 50, GREEN)
         draw_text(screen, '"D" or "->" to move left', 20, WIDTH / 2,
                   HEIGHT * 0.45, GREEN)
@@ -38,7 +38,7 @@ def options():
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    running = False
+                    showing_instructions = False
 
         pygame.display.update()
         clock.tick(60)
@@ -80,10 +80,10 @@ def main_menu():
                 WHITE,
             )
 
-        if button_1.collidepoint(mouse):
+        if button_1.collidepoint(*mouse):
             is_selected["button_1"] = True
             is_selected["button_2"] = False
-        elif button_2.collidepoint(mouse):
+        elif button_2.collidepoint(*mouse):
             is_selected["button_2"] = True
             is_selected["button_1"] = False
         elif pygame.mouse.get_rel() != (0, 0):
