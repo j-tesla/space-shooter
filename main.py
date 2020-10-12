@@ -220,11 +220,13 @@ def game():
                 player.shield_power()
 
         # check mob player collision
-        hits = pygame.sprite.spritecollide(player, mobs, True,
+        hits = pygame.sprite.spritecollide(player, mobs,
+                                           not player.just_started,
                                            pygame.sprite.collide_circle)
         for hit in hits:
             if not player.shield_up and not player.just_started:
                 player.health -= hit.radius * 2
+                spawn_mob()
             if player.health <= 0:
                 if pygame.mixer.get_init():
                     player_expln_snd.play()
@@ -237,14 +239,12 @@ def game():
                 player.hide()
                 player.lives -= 1
                 # player.health = 100
-            else:
-                if not player.just_started:
-                    if pygame.mixer.get_init():
-                        random.choice(expl_snds).play()
-                    explosion = Explosion(expln_anim, hit.rect.center,
-                                          hit.rect.width * 0.5)
-                    all_sprites.add(explosion)
-                spawn_mob()
+            elif not player.just_started:
+                if pygame.mixer.get_init():
+                    random.choice(expl_snds).play()
+                explosion = Explosion(expln_anim, hit.rect.center,
+                                      hit.rect.width * 0.5)
+                all_sprites.add(explosion)
         if player.lives == 0 and not death_explosion.alive():
             for sprite in all_sprites:
                 sprite.kill()
