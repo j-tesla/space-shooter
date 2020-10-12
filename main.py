@@ -122,7 +122,7 @@ def main_menu():
 
 def draw_text(surf, text, size, x, y, color=WHITE, font_name=retro):
     font = pygame.font.Font(font_name, size)
-    text_surface = font.render(text, True, color)
+    text_surface = font.render(text, False, color)
     text_rect = text_surface.get_rect()
     text_rect.midtop = (int(x), int(y))
     surf.blit(text_surface, text_rect)
@@ -202,6 +202,7 @@ def game():
                 all_sprites.add(power)
                 powerups.add(power)
             spawn_mob()
+
         # check player power collisions
         hits = pygame.sprite.spritecollide(player, powerups, True)
         for hit in hits:
