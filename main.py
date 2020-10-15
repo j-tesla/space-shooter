@@ -3,6 +3,7 @@
 # Music: Frozen Jam by tgfcoder <https://twitter.com/tgfcoder> licensed under CC-BY-3
 import random
 import sys
+import json
 from heapq import heappop
 from heapq import heappush
 
@@ -170,6 +171,9 @@ def game():
         spawn_mob()
 
     score = 0
+    highscore_object = Highscore()
+    highscore = highscore_object.get_highscore()
+
     # Game loop
     RUNNING = True
     while RUNNING:
@@ -255,6 +259,7 @@ def game():
         screen.blit(background, background_rect)
         all_sprites.draw(screen)
         draw_text(screen, str(score), 18, WIDTH / 2, 10)
+        draw_text(screen, "Highscore: " + str(highscore), 12, WIDTH / 2, 30)
         draw_health_bar(screen, 5, 5, player.health)
         draw_lives(screen, WIDTH - 100, 5, player.lives, player_img_mini)
         # *after* drawing everything, flip the display
@@ -266,6 +271,10 @@ def game():
     # Game over screen
     is_selected = {"menu_button": False}
     GAMEOVER = True
+    if score > highscore:
+        # Update the new score into the highscore file.
+        highscore_object.update_highscore(score)
+
     while GAMEOVER:
         # keep loop RUNNING at the right speed
         clock.tick(FPS)
@@ -282,6 +291,16 @@ def game():
             int(HEIGHT * 0.45) + 56,
             YELLOW,
         )
+
+        if score > highscore:
+            draw_text(
+                screen,
+                "NEW HIGHSCORE",
+                30,
+                WIDTH / 2,
+                int(HEIGHT * 0.45) + 90,
+                YELLOW,
+            )
 
         if is_selected["menu_button"]:
             menu_button = pygame.draw.rect(
@@ -550,6 +569,28 @@ class Explosion(pygame.sprite.Sprite):
                 self.image = self.anim[self.frame]
                 self.rect.center = center
 
+class Highscore:
+    # The name of the file where we store the highscore
+    _file_path = "highscore.json"
+
+    def __init__(self):
+        self.highscore = self.get_highscore_from_file()
+
+    def get_highscore_from_file(self):
+        try:
+            with open(self._file_path) as highscore_file:
+                score = json.load(highscore_file)
+                return score
+
+        except FileNotFoundError:
+            return 0
+
+    def get_highscore(self):
+        return self.highscore
+
+    def update_highscore(self, highscore):
+        with open(self._file_path, "w") as highscore_file:
+            json.dump(highscore, highscore_file)
 
 if __name__ == "__main__":
 
