@@ -226,8 +226,9 @@ def game():
         for hit in hits:
             if not player.shield_up and not player.just_started:
                 player.health -= hit.radius * 2
-                spawn_mob()
+
             if player.health <= 0:
+                spawn_mob()
                 if pygame.mixer.get_init():
                     player_expln_snd.play()
                 death_explosion = Explosion(
@@ -240,6 +241,7 @@ def game():
                 player.lives -= 1
                 # player.health = 100
             elif not player.just_started:
+                spawn_mob()
                 if pygame.mixer.get_init():
                     random.choice(expl_snds).play()
                 explosion = Explosion(expln_anim, hit.rect.center,
