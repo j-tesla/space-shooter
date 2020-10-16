@@ -17,3 +17,6 @@ game_dir = path.dirname(__file__)
 img_dir = path.join(game_dir, 'resources', 'img')
 snd_dir = path.join(game_dir, 'resources', 'snd')
 retro = path.join('resources', 'retro.ttf')
+
+# set up the file to store more permanent data
+data_file = "data.json"
