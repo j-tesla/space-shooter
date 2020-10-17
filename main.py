@@ -1,6 +1,7 @@
 # Shoot'em up
 # Art: Kenny <https://opengameart.org/users/kenney>
 # Music: Frozen Jam by tgfcoder <https://twitter.com/tgfcoder> licensed under CC-BY-3
+import json
 import random
 import sys
 from heapq import heappop
@@ -170,6 +171,8 @@ def game():
         spawn_mob()
 
     score = 0
+    highscore_object = Highscore()
+
     # Game loop
     RUNNING = True
     while RUNNING:
@@ -257,6 +260,8 @@ def game():
         screen.blit(background, background_rect)
         all_sprites.draw(screen)
         draw_text(screen, str(score), 18, WIDTH / 2, 10)
+        draw_text(screen, "Highscore: " + str(highscore_object.highscore), 12,
+                  WIDTH / 2, 30)
         draw_health_bar(screen, 5, 5, player.health)
         draw_lives(screen, WIDTH - 100, 5, player.lives, player_img_mini)
         # *after* drawing everything, flip the display
@@ -268,6 +273,10 @@ def game():
     # Game over screen
     is_selected = {"menu_button": False}
     GAMEOVER = True
+    if score > highscore_object.highscore:
+        # Update the new score into the highscore file.
+        highscore_object.update_highscore(score)
+
     while GAMEOVER:
         # keep loop RUNNING at the right speed
         clock.tick(FPS)
@@ -284,6 +293,16 @@ def game():
             int(HEIGHT * 0.45) + 56,
             YELLOW,
         )
+
+        if score > highscore_object.highscore:
+            draw_text(
+                screen,
+                "NEW HIGHSCORE",
+                30,
+                WIDTH / 2,
+                int(HEIGHT * 0.45) + 90,
+                GREEN,
+            )
 
         if is_selected["menu_button"]:
             menu_button = pygame.draw.rect(
@@ -551,6 +570,41 @@ class Explosion(pygame.sprite.Sprite):
                 center = self.rect.center
                 self.image = self.anim[self.frame]
                 self.rect.center = center
+
+
+class Highscore:
+    # The key value corresponding to highscore in the JSON data file
+    _highscore_key = "highscore"
+
+    def __init__(self):
+        self.highscore = self.get_highscore_from_file()
+
+    def get_highscore_from_file(self):
+        try:
+            with open(data_file) as f:
+                data = json.load(f)
+                return data[self._highscore_key]
+
+        except FileNotFoundError:
+            return 0
+
+    def update_highscore(self, highscore):
+        # Obtain the json data, if it exists
+        try:
+            with open(data_file) as f:
+                data = json.load(f)
+
+        except FileNotFoundError:
+            # If not found, just initialize the data
+            data = dict()
+
+        # Update the highscore
+        data[self._highscore_key] = highscore
+
+        # Rewrite the file to store away updated highscore.
+        # It will create the data file if it does not exist.
+        with open(data_file, "w") as f:
+            json.dump(data, f)
 
 
 if __name__ == "__main__":
