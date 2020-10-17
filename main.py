@@ -1,9 +1,9 @@
 # Shoot'em up
 # Art: Kenny <https://opengameart.org/users/kenney>
 # Music: Frozen Jam by tgfcoder <https://twitter.com/tgfcoder> licensed under CC-BY-3
+import json
 import random
 import sys
-import json
 from heapq import heappop
 from heapq import heappush
 
@@ -258,7 +258,8 @@ def game():
         screen.blit(background, background_rect)
         all_sprites.draw(screen)
         draw_text(screen, str(score), 18, WIDTH / 2, 10)
-        draw_text(screen, "Highscore: " + str(highscore_object.highscore), 12, WIDTH / 2, 30)
+        draw_text(screen, "Highscore: " + str(highscore_object.highscore), 12,
+                  WIDTH / 2, 30)
         draw_health_bar(screen, 5, 5, player.health)
         draw_lives(screen, WIDTH - 100, 5, player.lives, player_img_mini)
         # *after* drawing everything, flip the display
@@ -568,6 +569,7 @@ class Explosion(pygame.sprite.Sprite):
                 self.image = self.anim[self.frame]
                 self.rect.center = center
 
+
 class Highscore:
     # The key value corresponding to highscore in the JSON data file
     _highscore_key = "highscore"
@@ -601,6 +603,7 @@ class Highscore:
         # It will create the data file if it does not exist.
         with open(data_file, "w") as f:
             json.dump(data, f)
+
 
 if __name__ == "__main__":
 
