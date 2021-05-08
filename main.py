@@ -594,7 +594,7 @@ class Highscore:
 
         except FileNotFoundError:
             # If not found, just initialize the data
-            data = dict()
+            data = {}
 
         # Update the highscore
         data[self._highscore_key] = highscore
