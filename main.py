@@ -165,7 +165,7 @@ def game():
 
     player = Player()
     all_sprites.add(player)
-    for i in range(8):
+    for _ in range(8):
         spawn_mob()
 
     score = 0
