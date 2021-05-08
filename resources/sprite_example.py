@@ -1,7 +1,8 @@
 # sprite example
-import pygame
-import random
 import os
+import random
+
+import pygame
 
 WIDTH = 800
 HEIGHT = 600

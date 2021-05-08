@@ -1,6 +1,7 @@
 # Pygame template -- skeleton for a new pygame project
-import pygame
 import random
+
+import pygame
 
 WIDTH = 360
 HEIGHT = 480
