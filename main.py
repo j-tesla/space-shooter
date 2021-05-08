@@ -102,7 +102,7 @@ def main_menu():
                         game()
                     elif is_selected["button_2"]:
                         options()
-                if event.key in  (pygame.K_UP, pygame.K_w):
+                if event.key in (pygame.K_UP, pygame.K_w):
                     is_selected["button_1"] = True
                     is_selected["button_2"] = False
                 elif event.key in (pygame.K_DOWN, pygame.K_s):
