@@ -3,6 +3,8 @@
 
 ![GitHub top language](https://img.shields.io/github/languages/top/j-tesla/space-shooter?color=yellow-green)
 
+[![DeepSource](https://deepsource.io/gh/j-tesla/space-shooter.svg/?label=active+issues&show_trend=true)](https://deepsource.io/gh/j-tesla/space-shooter/?ref=repository-badge)
+
 # space-shooter
 
 [![GitHub Pipenv locked dependency version](https://img.shields.io/github/pipenv/locked/dependency-version/j-tesla/space-shooter/pygame?color=yellow)
