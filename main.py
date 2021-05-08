@@ -102,10 +102,10 @@ def main_menu():
                         game()
                     elif is_selected["button_2"]:
                         options()
-                if event.key == pygame.K_UP or event.key == pygame.K_w:
+                if event.key in  (pygame.K_UP, pygame.K_w):
                     is_selected["button_1"] = True
                     is_selected["button_2"] = False
-                elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                elif event.key in (pygame.K_DOWN, pygame.K_s):
                     is_selected["button_1"] = False
                     is_selected["button_2"] = True
 
@@ -331,7 +331,7 @@ def game():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     GAMEOVER = False
-                if event.key == pygame.K_DOWN or event.key == pygame.K_UP:
+                if event.key in (pygame.K_DOWN, pygame.K_UP):
                     is_selected["menu_button"] = not is_selected["menu_button"]
                 if event.key == pygame.K_SPACE and is_selected["menu_button"]:
                     GAMEOVER = False
