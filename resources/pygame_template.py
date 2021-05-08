@@ -1,6 +1,7 @@
 # Pygame template -- skeleton for a new pygame project
-import pygame
 import random
+
+import pygame
 
 WIDTH = 360
 HEIGHT = 480
@@ -18,7 +19,7 @@ YELLOW = (255, 255, 0)
 pygame.init()
 pygame.mixer.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption('My Game')
+pygame.display.set_caption("My Game")
 clock = pygame.time.Clock()
 
 all_sprites = pygame.sprite.Group()
