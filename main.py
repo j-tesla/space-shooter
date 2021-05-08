@@ -142,8 +142,7 @@ def spawn_bullet(x, y):
 
 
 def draw_health_bar(surf, x, y, percentage):
-    if percentage <= 0:
-        percentage = 0
+    percentage = max(percentage, 0)
     bar_length = 100
     bar_height = 10
     filled = int(percentage / 100 * bar_length)
