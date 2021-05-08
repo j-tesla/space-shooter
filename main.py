@@ -4,8 +4,7 @@
 import json
 import random
 import sys
-from heapq import heappop
-from heapq import heappush
+from heapq import heappop, heappush
 
 import pygame
 
@@ -142,8 +141,7 @@ def spawn_bullet(x, y):
 
 
 def draw_health_bar(surf, x, y, percentage):
-    if percentage <= 0:
-        percentage = 0
+    percentage = max(percentage, 0)
     bar_length = 100
     bar_height = 10
     filled = int(percentage / 100 * bar_length)
@@ -167,7 +165,7 @@ def game():
 
     player = Player()
     all_sprites.add(player)
-    for i in range(8):
+    for _ in range(8):
         spawn_mob()
 
     score = 0
@@ -596,7 +594,7 @@ class Highscore:
 
         except FileNotFoundError:
             # If not found, just initialize the data
-            data = dict()
+            data = {}
 
         # Update the highscore
         data[self._highscore_key] = highscore
