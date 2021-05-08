@@ -4,8 +4,7 @@
 import json
 import random
 import sys
-from heapq import heappop
-from heapq import heappush
+from heapq import heappop, heappush
 
 import pygame
 
