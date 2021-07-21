@@ -10,6 +10,7 @@ import pygame
 
 from settings import *
 
+
 # initialise pygame and create window
 pygame.init()
 try:
@@ -185,7 +186,11 @@ def game():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     player.shoot()
-
+             #can fire with the left mouse button
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    player.shoot()
+            
         # Update
         all_sprites.update()
 
@@ -418,6 +423,8 @@ class Player(pygame.sprite.Sprite):
             if pygame.mixer.get_init():
                 shield_down_snd.play()
         self.speedx = 0
+        pygame.mouse.set_cursor(
+            (8, 8), (0, 0), (0, 0, 0, 0, 0, 0, 0, 0), (0, 0, 0, 0, 0, 0, 0, 0))
         key_state = pygame.key.get_pressed()
         if key_state[pygame.K_LEFT] or key_state[pygame.K_a]:
             self.speedx = -7
@@ -427,7 +434,29 @@ class Player(pygame.sprite.Sprite):
             self.rect.right = WIDTH
         if self.rect.left < 0:
             self.rect.left = 0
-        self.rect.x += self.speedx
+            
+        #move character with mosue movement
+        mousex = 0 #made a variable for storing mouse position change
+        mouseposition = 0  # made a variable for storing mouse absolute position
+        if pygame.MOUSEMOTION:
+            mouseX, mouseY = pygame.mouse.get_rel()
+            mousex = mouseX
+            #print(mousex)
+            if mousex > 0:
+                self.speedx = 7
+            if mousex < 0:
+                self.speedx = -7
+        if pygame.MOUSEMOTION:
+            mouseX, mouseY = pygame.mouse.get_pos()
+            mouseposition = mouseX
+            # print(mouseposition)      
+            if mouseposition > 478:
+                self.speedx = 7
+            if mouseposition < 11:
+                self.speedx = -7
+        self.rect.x += self.speedx 
+        
+        
 
     def shoot(self):
         if not self.hidden:
@@ -485,6 +514,7 @@ class Mob(pygame.sprite.Sprite):
         self.rot = 0
         self.rot_speed = random.randrange(-8, 8)
         self.last_update = pygame.time.get_ticks()
+        pygame.mouse.set_pos([257,580])
 
     def rotate(self):
         now = pygame.time.get_ticks()
