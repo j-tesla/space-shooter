@@ -36,9 +36,8 @@ def options():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    showing_instructions = False
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                showing_instructions = False
 
         pygame.display.update()
         clock.tick(FPS)
@@ -109,12 +108,11 @@ def main_menu():
                     is_selected["button_1"] = False
                     is_selected["button_2"] = True
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:
-                    if is_selected["button_1"]:
-                        game()
-                    elif is_selected["button_2"]:
-                        options()
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if is_selected["button_1"]:
+                    game()
+                elif is_selected["button_2"]:
+                    options()
 
         pygame.display.update()
         clock.tick(60)
@@ -182,9 +180,8 @@ def game():
             if event.type == pygame.QUIT:
                 RUNNING = False
                 sys.exit()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    player.shoot()
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                player.shoot()
 
         # Update
         all_sprites.update()
@@ -337,11 +334,11 @@ def game():
                     GAMEOVER = False
                     player.__init__()
                     main_menu()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1 and is_selected["menu_button"]:
-                    GAMEOVER = False
-                    player.__init__()
-                    main_menu()
+            if (event.type == pygame.MOUSEBUTTONDOWN and event.button == 1
+               and is_selected["menu_button"]):
+                GAMEOVER = False
+                player.__init__()
+                main_menu()
 
     pygame.quit()
     sys.exit()
@@ -399,13 +396,12 @@ class Player(pygame.sprite.Sprite):
             self.just_started = True
             self.flicker = 0
         # gun timer
-        if len(self.gun_power_time_heap) > 0:
-            if pygame.time.get_ticks(
-            ) - self.gun_power_time_heap[0] > self.power_timer:
-                self.gun -= 1
-                heappop(self.gun_power_time_heap)
-                if self.gun < 1:
-                    self.gun = 1
+        if (len(self.gun_power_time_heap) > 0 and pygame.time.get_ticks() -
+           self.gun_power_time_heap[0] > self.power_timer):
+            self.gun -= 1
+            heappop(self.gun_power_time_heap)
+            if self.gun < 1:
+                self.gun = 1
         # shield_up down
         if (pygame.time.get_ticks() - self.shield_up_time > self.power_timer
                 and self.shield_up):
