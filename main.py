@@ -9,7 +9,7 @@ from heapq import heappush
 
 import pygame
 
-from settings import *
+from settings import WIDTH, HEIGHT, FPS, WHITE, BLACK, RED, GREEN, YELLOW, img_dir, snd_dir, retro, data_file
 
 # initialise pygame and create window
 pygame.init()
