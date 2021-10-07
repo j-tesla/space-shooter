@@ -10,7 +10,20 @@ from heapq import heappush
 
 import pygame
 
-from settings import WIDTH, HEIGHT, FPS, WHITE, BLACK, RED, GREEN, YELLOW, img_dir, snd_dir, retro, data_file
+from settings import (
+    WIDTH,
+    HEIGHT,
+    FPS,
+    WHITE,
+    BLACK,
+    RED,
+    GREEN,
+    YELLOW,
+    img_dir,
+    snd_dir,
+    retro,
+    data_file,
+)
 
 # initialise pygame and create window
 pygame.init()
@@ -54,24 +67,19 @@ def main_menu():
         screen.fill(BLACK)
         draw_text(screen, "Space shooter", 48, WIDTH / 2, HEIGHT * 0.15, GREEN)
         mouse = pygame.mouse.get_pos()
-        button_1 = pygame.Rect(int(WIDTH / 2) - 100,
-                               int(HEIGHT * 0.5) - 40, 200, 50)
-        button_2 = pygame.Rect(int(WIDTH / 2) - 100,
-                               int(HEIGHT * 0.5) + 40, 200, 50)
+        button_1 = pygame.Rect(int(WIDTH / 2) - 100, int(HEIGHT * 0.5) - 40, 200, 50)
+        button_2 = pygame.Rect(int(WIDTH / 2) - 100, int(HEIGHT * 0.5) + 40, 200, 50)
 
         if is_selected["button_1"]:
             pygame.draw.rect(screen, WHITE, button_1)
-            draw_text(screen, "Play", 20, int(WIDTH / 2),
-                      int(HEIGHT * 0.5 - 25), RED)
+            draw_text(screen, "Play", 20, int(WIDTH / 2), int(HEIGHT * 0.5 - 25), RED)
         else:
             pygame.draw.rect(screen, RED, button_1)
-            draw_text(screen, "Play", 20, int(WIDTH / 2),
-                      int(HEIGHT * 0.5 - 25), WHITE)
+            draw_text(screen, "Play", 20, int(WIDTH / 2), int(HEIGHT * 0.5 - 25), WHITE)
         if is_selected["button_2"]:
             pygame.draw.rect(screen, WHITE, button_2)
             draw_text(
-                screen, "Instructions", 20, int(
-                    WIDTH / 2), int(HEIGHT * 0.5 + 55), RED
+                screen, "Instructions", 20, int(WIDTH / 2), int(HEIGHT * 0.5 + 55), RED
             )
         else:
             pygame.draw.rect(screen, RED, button_2)
@@ -197,8 +205,7 @@ def game():
             score += int((70 - hit.radius) / 2)
             if pygame.mixer.get_init():
                 random.choice(expl_snds).play()
-            explosion = Explosion(
-                expln_anim, hit.rect.center, hit.rect.width * 0.9)
+            explosion = Explosion(expln_anim, hit.rect.center, hit.rect.width * 0.9)
             all_sprites.add(explosion)
             if random.random() > 0.9:
                 power = Power(hit.rect.center)
@@ -247,8 +254,7 @@ def game():
                 spawn_mob()
                 if pygame.mixer.get_init():
                     random.choice(expl_snds).play()
-                explosion = Explosion(
-                    expln_anim, hit.rect.center, hit.rect.width * 0.5)
+                explosion = Explosion(expln_anim, hit.rect.center, hit.rect.width * 0.5)
                 all_sprites.add(explosion)
         if player.lives == 0 and not death_explosion.alive():
             for sprite in all_sprites:
@@ -261,8 +267,7 @@ def game():
         all_sprites.draw(screen)
         draw_text(screen, str(score), 18, WIDTH / 2, 10)
         draw_text(
-            screen, "Highscore: " +
-            str(highscore_object.highscore), 12, WIDTH / 2, 30
+            screen, "Highscore: " + str(highscore_object.highscore), 12, WIDTH / 2, 30
         )
         draw_health_bar(screen, 5, 5, player.health)
         draw_lives(screen, WIDTH - 100, 5, player.lives, player_img_mini)
@@ -315,8 +320,7 @@ def game():
             menu_button = pygame.draw.rect(
                 screen, RED, [WIDTH // 2 - 70, int(HEIGHT * 0.75), 140, 40]
             )
-            draw_text(screen, "MENU", 30, WIDTH //
-                      2, int(HEIGHT * 0.75), WHITE)
+            draw_text(screen, "MENU", 30, WIDTH // 2, int(HEIGHT * 0.75), WHITE)
         # *after* drawing everything, flip the display
         pygame.display.flip()
 
@@ -448,10 +452,8 @@ class Player(pygame.sprite.Sprite):
                     spawn_bullet(self.rect.centerx - it * 15, self.gun_pos_y)
             else:
                 for it in range(1, int((self.gun / 2) + 1)):
-                    spawn_bullet(self.rect.centerx + it *
-                                 15 - 7, self.gun_pos_y)
-                    spawn_bullet(self.rect.centerx - it *
-                                 15 + 7, self.gun_pos_y)
+                    spawn_bullet(self.rect.centerx + it * 15 - 7, self.gun_pos_y)
+                    spawn_bullet(self.rect.centerx - it * 15 + 7, self.gun_pos_y)
 
     def hide(self):
         # hide the player temporarily
@@ -556,8 +558,7 @@ class Explosion(pygame.sprite.Sprite):
         self.size = int(size)
         self.anim = []
         for expl_img in anim:
-            expl_img_resized = pygame.transform.scale(
-                expl_img, (self.size, self.size))
+            expl_img_resized = pygame.transform.scale(expl_img, (self.size, self.size))
             self.anim.append(expl_img_resized)
         self.image = self.anim[0]
         self.rect = self.image.get_rect()
@@ -627,8 +628,7 @@ if __name__ == "__main__":
     player_img.set_colorkey(BLACK)
     player_img_mini = pygame.transform.scale(player_img, (25, 19)).convert()
     player_img_mini.set_colorkey(BLACK)
-    bullet_img = pygame.image.load(
-        path.join(img_dir, "laserRed06.png")).convert()
+    bullet_img = pygame.image.load(path.join(img_dir, "laserRed06.png")).convert()
     bullet_img.set_colorkey(BLACK)
     meteor_imgs = []
     meteor_list = [
@@ -677,17 +677,14 @@ if __name__ == "__main__":
             expl_snds.append(pygame.mixer.Sound(path.join(snd_dir, expl)))
         for sound in expl_snds:
             sound.set_volume(0.6)
-        player_expln_snd = pygame.mixer.Sound(
-            path.join(snd_dir, "rumble1.ogg"))
+        player_expln_snd = pygame.mixer.Sound(path.join(snd_dir, "rumble1.ogg"))
         gun_power_snd = pygame.mixer.Sound(path.join(snd_dir, "pow5.wav"))
         gun_power_snd.set_volume(0.6)
         pill_power_snd = pygame.mixer.Sound(path.join(snd_dir, "pow4.wav"))
         pill_power_snd.set_volume(0.6)
         lose_snd = pygame.mixer.Sound(path.join(snd_dir, "sfx_lose.ogg"))
-        shield_up_snd = pygame.mixer.Sound(
-            path.join(snd_dir, "sfx_shieldUp.ogg"))
-        shield_down_snd = pygame.mixer.Sound(
-            path.join(snd_dir, "sfx_shieldDown.ogg"))
+        shield_up_snd = pygame.mixer.Sound(path.join(snd_dir, "sfx_shieldUp.ogg"))
+        shield_down_snd = pygame.mixer.Sound(path.join(snd_dir, "sfx_shieldDown.ogg"))
         pygame.mixer.music.load(
             path.join(snd_dir, "tgfcoder-FrozenJam-SeamlessLoop.ogg")
         )
