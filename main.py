@@ -4,26 +4,13 @@
 import json
 import random
 import sys
+from heapq import heappop, heappush
 from os import path
-from heapq import heappop
-from heapq import heappush
 
 import pygame
 
-from settings import (
-    WIDTH,
-    HEIGHT,
-    FPS,
-    WHITE,
-    BLACK,
-    RED,
-    GREEN,
-    YELLOW,
-    img_dir,
-    snd_dir,
-    retro,
-    data_file,
-)
+from settings import (BLACK, FPS, GREEN, HEIGHT, RED, WHITE, WIDTH, YELLOW,
+                      data_file, img_dir, retro, snd_dir)
 
 # initialise pygame and create window
 pygame.init()
