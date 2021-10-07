@@ -6,10 +6,22 @@ import random
 import sys
 from heapq import heappop
 from heapq import heappush
+from os import path
 
 import pygame
 
-from settings import *
+from settings import BLACK
+from settings import data_file
+from settings import FPS
+from settings import GREEN
+from settings import HEIGHT
+from settings import img_dir
+from settings import RED
+from settings import retro
+from settings import snd_dir
+from settings import WHITE
+from settings import WIDTH
+from settings import YELLOW
 
 # initialise pygame and create window
 pygame.init()
