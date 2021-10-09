@@ -2,3 +2,5 @@ venv/
 .idea/
 temp.py
 __pycache__/
+/build
+/dist
