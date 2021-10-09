@@ -6,4 +6,4 @@ services:
     volumes:
       - .:/src
     working_dir: /src
-    command: pyinstaller --noconfirm --onefile --clean space-shooter.spec
+    command: ./build.sh
