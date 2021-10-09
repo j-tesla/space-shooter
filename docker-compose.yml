@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  pyinstaller:
+    build: .
+    volumes:
+      - .:/src
+    working_dir: /src
+    command: pyinstaller --noconfirm --onefile --clean space-shooter.spec
