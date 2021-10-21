@@ -45,6 +45,19 @@ Run *main.py*
 pipenv run python3 main.py
 ```
 
+### Build standalone executable (using pyinstaller)
+
+Execute the build script either via docker-compose:
+```shell script
+docker-compose run pyinstaller
+```
+or directly execute it locally:
+```shell script
+./build.sh
+```
+
+Afterwards you can find a standalone executable of the game at `dist/space-shooter`.
+
 ### License
 
 ![GitHub License](https://img.shields.io/github/license/j-tesla/space-shooter)
