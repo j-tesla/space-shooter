@@ -7,8 +7,7 @@
 
 # space-shooter
 
-[![GitHub Pipenv locked dependency version](https://img.shields.io/github/pipenv/locked/dependency-version/j-tesla/space-shooter/pygame?color=yellow)
-](https://github.com/pygame/pygame)
+[![GitHub Pipenv locked dependency version](https://img.shields.io/github/pipenv/locked/dependency-version/j-tesla/space-shooter/pygame?color=yellow)](https://github.com/pygame/pygame)
 
 *A *shmup* game*
 
@@ -18,9 +17,10 @@
 
 #### Prerequisites
 
-+ [python3](https://www.python.org/downloads/) 
-+ [pip](https://pip.pypa.io/en/stable/installing/)
-+ [pipenv](https://pipenv-fork.readthedocs.io/en/latest/install.html#installing-pipenv) (suggested)
+- [python3](https://www.python.org/downloads/)
+- [pip](https://pip.pypa.io/en/stable/installing/)
+- [pipenv](https://pipenv-fork.readthedocs.io/en/latest/install.html#installing-pipenv)
+  (suggested)
 
 #### Clone
 
@@ -33,20 +33,41 @@ git clone https://github.com/j-tesla/space-shooter.git
 ```shell script
 cd space-shooter
 ```
+
 Install dependencies to a virtual envionment
+
 ```sh
 pipenv install
 ```
 
 ### Usage
 
-Run *main.py*
+Run _main.py_
+
 ```shell script
 pipenv run python3 main.py
 ```
+
+### Build standalone executable (using pyinstaller)
+
+Execute the build script either via docker-compose:
+
+```shell script
+docker-compose run pyinstaller
+```
+
+or directly execute it locally:
+
+```shell script
+./build.sh
+```
+
+Afterwards you can find a standalone executable of the game at
+`dist/space-shooter`.
 
 ### License
 
 ![GitHub License](https://img.shields.io/github/license/j-tesla/space-shooter)
 
-This project is licensed under the MIT License. For details, check the [LICENSE](LICENSE) file.
+This project is licensed under the MIT License. For details, check the
+[LICENSE](LICENSE) file.

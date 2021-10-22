@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  pyinstaller:
+    build: .
+    volumes:
+      - .:/src
+    working_dir: /src
+    command: ./build.sh
